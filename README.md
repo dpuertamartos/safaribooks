@@ -4,7 +4,28 @@ I'm not responsible for the use of this program, this is only for *personal* and
 Before any usage please read the *O'Reilly*'s [Terms of Service](https://learning.oreilly.com/terms/).  
 
 <a href='https://ko-fi.com/Y8Y0MPEGU' target='_blank'><img height='80' style='border:0px;height:60px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com'/></a>
+## Extract cookies.json
 
+1. go to https://learning.oreilly.com/profile/
+
+2. execute jscript (first command `allow pasting`)
+
+```
+const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+  const [key, val] = cookie.trim().split('=');
+  if (['_abck', 'bm_sz', 'orm-jwt', 'orm-rt'].includes(key)) {
+    acc[key] = val;
+  }
+  return acc;
+}, {});
+
+const blob = new Blob([JSON.stringify(cookies, null, 2)], {type: 'application/json'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'cookies.json';
+a.click();
+```
 ## ✨✨ *Attention needed* ✨✨
 - This project is no longer actively maintained.  
 - *Login through `safaribooks` no longer works due to changes in ORLY APIs.*
